@@ -180,12 +180,6 @@ Let $\mathbf{B}$ be a $4\times 4$ matrix to which we apply the following 7 opera
 
 \textbf{Solution:}
 
-For code you may use:
-\begin{lstlisting}[language=python]
-## Comment
-import numpy as np
-\end{lstlisting}
-
 \begin{enumerate}
     \item We can write each operation as a matrix $E_n$ where $n$ is the operation
     number. We know that in order to modify $\mathbf{B}$, we can either left multiply 
@@ -297,6 +291,8 @@ B = np.array([[1, 2, 3, 4],
               [5, 6, 7, 8],
               [9, 10, 11, 12],
               [13, 14, 15, 16]])
+
+# double column 1
 E1 = np.array([[2, 0, 0, 0],
                [0, 1, 0, 0],
                [0, 0, 1, 0],
@@ -309,6 +305,122 @@ array([[ 2,  2,  3,  4],
        [18, 10, 11, 12],
        [26, 14, 15, 16]])
 \end{verbatim}
+\begin{lstlisting}[language=python]
+# halve row 3
+E2 = np.array([[1, 0, 0, 0],
+               [0, 1, 0, 0],
+               [0, 0, 0.5, 0],
+               [0, 0, 0, 1]])
+E2 @ B @ E1
+\end{lstlisting}
+\begin{verbatim}
+array([[ 2. ,  2. ,  3. ,  4. ],
+       [10. ,  6. ,  7. ,  8. ],
+       [ 9. ,  5. ,  5.5,  6. ],
+       [26. , 14. , 15. , 16. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# add row 1 to row 4
+E3 = np.array([[1, 0, 0, 0],
+               [0, 1, 0, 0],
+               [0, 0, 1, 0],
+               [1, 0, 0, 1]])
+E3 @ E2 @ B @ E1
+\end{lstlisting}
+\begin{verbatim}
+array([[ 2. ,  2. ,  3. ,  4. ],
+       [10. ,  6. ,  7. ,  8. ],
+       [ 9. ,  5. ,  5.5,  6. ],
+       [28. , 16. , 18. , 20. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# interchange columns 2 and 3
+E4 = np.array([[1, 0, 0, 0],
+               [0, 0, 1, 0],
+               [0, 1, 0, 0],
+               [0, 0, 0, 1]])
+E3 @ E2 @ B @ E1 @ E4
+\end{lstlisting}
+\begin{verbatim}
+array([[ 2. ,  3. ,  2. ,  4. ],
+       [10. ,  7. ,  6. ,  8. ],
+       [ 9. ,  5.5,  5. ,  6. ],
+       [28. , 18. , 16. , 20. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# subtract row 2 from each of the other rows
+E5 = np.array([[1, -1, 0, 0],
+               [0, 1, 0, 0],
+               [0, -1, 1, 0],
+               [0, -1, 0, 1]])
+E5 @ E3 @ E2 @ B @ E1 @ E4
+\end{lstlisting}
+\begin{verbatim}
+array([[-8. , -4. , -4. , -4. ],
+       [10. ,  7. ,  6. ,  8. ],
+       [-1. , -1.5, -1. , -2. ],
+       [18. , 11. , 10. , 12. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# replace column 4 by column 1
+E6 = np.array([[1, 0, 0, 1],
+               [0, 1, 0, 0],
+               [0, 0, 1, 0],
+               [0, 0, 0, 0]])
+E5 @ E3 @ E2 @ B @ E1 @ E4 @ E6
+\end{lstlisting}
+\begin{verbatim}
+array([[-8. , -4. , -4. , -8. ],
+       [10. ,  7. ,  6. , 10. ],
+       [-1. , -1.5, -1. , -1. ],
+       [18. , 11. , 10. , 18. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# delete column 2
+E7 = np.array([[1, 0, 0],
+               [0, 0, 0],
+               [0, 1, 0],
+               [0, 0, 1]])
+E5 @ E3 @ E2 @ B @ E1 @ E4 @ E6 @ E7
+\end{lstlisting}
+\begin{verbatim}
+array([[-8., -4., -8.],
+       [10.,  6., 10.],
+       [-1., -1., -1.],
+       [18., 10., 18.]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# Verify A
+A = E5 @ E3 @ E2
+A
+\end{lstlisting}
+\begin{verbatim}
+array([[ 1. , -1. ,  0. ,  0. ],
+       [ 0. ,  1. ,  0. ,  0. ],
+       [ 0. , -1. ,  0.5,  0. ],
+       [ 1. , -1. ,  0. ,  1. ]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# Verify C
+C = E1 @ E4 @ E6 @ E7
+C
+\end{lstlisting}
+\begin{verbatim}
+array([[2, 0, 2],
+       [0, 1, 0],
+       [0, 0, 0],
+       [0, 0, 0]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+# Verify D = ABC
+A @ B @ C
+\end{lstlisting}
+\begin{verbatim}
+array([[-8., -4., -8.],
+       [10.,  6., 10.],
+       [-1., -1., -1.],
+       [18., 10., 18.]])
+\end{verbatim}
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -319,6 +431,8 @@ array([[ 2,  2,  3,  4],
 Prove that if a matrix $\mathbf{A}$ is triangular (upper or lower) then $\mathbf{A}^{-1}$ is also triangular. Further, use the result to show that if $\mathbf{A}$ is both triangular and orthogonal, then it is diagonal. \\
 
 \textbf{Solution:}
+
+
 
 %%%%%%%%%%%%%%%%%%%%
 \clearpage
@@ -368,16 +482,165 @@ Given two 3-dimensional vectors $\mathbf{a}, \mathbf{b}$, and three matrices $A 
     
     \item [(v)] Determinants: $\det(\mathbf{AB}), \quad \det(\mathbf{BC})$. (3 points)
 \end{enumerate}
-
 \item Implement all the parts above using python (any programming language of your choice)  and show the answers and code. (5 points)
-
 \end{enumerate}
-
-
-\end{enumerate}
-
 
 \textbf{Solution:}
 
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item [(i)] $\mathbf{a} + \mathbf{b} = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} + \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = \begin{bmatrix} 1 + 2 \\ 3 + 4 \\ 5 + 6 \end{bmatrix} = \begin{bmatrix} 3 \\ 7 \\ 11 \end{bmatrix}$\\
+            $\beta_1 \mathbf{a} = 4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} = \begin{bmatrix} 4 \cdot 1 \\ 4 \cdot 3 \\ 4 \cdot 5 \end{bmatrix} = \begin{bmatrix} 4 \\ 12 \\ 20 \end{bmatrix}$\\
+            $\mathbf{a} \circ \mathbf{b} = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} \circ \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = \begin{bmatrix} 1 \cdot 2 \\ 3 \cdot 4 \\ 5 \cdot 6 \end{bmatrix} = \begin{bmatrix} 2 \\ 12 \\ 30 \end{bmatrix}$\\
+            $\beta_1 \mathbf{a} + \beta_2 \mathbf{b} = 4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} + 5 \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = \begin{bmatrix} 4 \cdot 1 + 5 \cdot 2 \\ 4 \cdot 3 + 5 \cdot 4 \\ 4 \cdot 5 + 5 \cdot 6 \end{bmatrix} = \begin{bmatrix} 4 + 10 \\ 12 + 20 \\ 20 + 30 \end{bmatrix} = \begin{bmatrix} 14 \\ 32 \\ 50 \end{bmatrix}$
+\item [(ii)] $\beta_1 \mathbf{A} = 4 \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 4 \cdot 1 & 4 \cdot 2 & 4 \cdot 3 \\ 4 \cdot 2 & 4 \cdot 4 & 4 \cdot 6 \end{bmatrix} = \begin{bmatrix} 4 & 8 & 12 \\ 8 & 16 & 24 \end{bmatrix}$\\
+             $\mathbf{A} + \mathbf{B}$ DNE bc dimensions are incompatible \\
+             $\mathbf{A} + \mathbf{C} = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix} + \begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix} = \begin{bmatrix} 1 + 1 & 2 + 0 & 3 + 0 \\ 2 + 0 & 4 + 0 & 6 + 1 \end{bmatrix} = \begin{bmatrix} 2 & 2 & 3 \\ 2 & 4 & 7 \end{bmatrix}$
+\item [(iii)] $(\mathbf{A}\mathbf{B})^\top = \left(\begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix}\right)^\top = \begin{bmatrix} 1 \cdot 7 + 2 \cdot 9 + 3 \cdot 11 & 1 \cdot 8 + 2 \cdot 10 + 3 \cdot 12 \\ 2 \cdot 7 + 4 \cdot 9 + 6 \cdot 11 & 2 \cdot 8 + 4 \cdot 10 + 6 \cdot 12 \end{bmatrix}^\top = \\\begin{bmatrix} 58 & 64 \\ 116 & 128 \end{bmatrix}^\top = \begin{bmatrix} 58 & 116 \\ 64 & 128 \end{bmatrix}$\\
+              $\mathbf{B}^\top \mathbf{A}^\top = \begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix}^\top \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix}^\top = \begin{bmatrix} 7 & 9 & 11 \\ 8 & 10 & 12 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 2 & 4 \\ 3 & 6 \end{bmatrix} = \\\begin{bmatrix} 7 \cdot 1 + 9 \cdot 2 + 11 \cdot 3 & 7 \cdot 2 + 9 \cdot 4 + 11 \cdot 6 \\ 8 \cdot 1 + 10 \cdot 2 + 12 \cdot 3 & 8 \cdot 2 + 10 \cdot 4 + 12 \cdot 6 \end{bmatrix} = \begin{bmatrix} 58 & 116 \\ 64 & 128 \end{bmatrix}$\\
+              $(\mathbf{A}^{\top})^{\top} = \left(\begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix}^\top\right)^{\top} = \begin{bmatrix} 1 & 2 \\ 2 & 4 \\ 3 & 6 \end{bmatrix}^\top = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix}$\\
+              $(\mathbf{A} + \mathbf{C})^\top = \left(\text{part (ii)}\right)^\top = \begin{bmatrix} 2 & 2 & 3 \\ 2 & 4 & 7 \end{bmatrix}^\top = \begin{bmatrix} 2 & 2 \\ 2 & 4 \\ 3 & 7 \end{bmatrix}$
+\item [(iv)] $\langle\mathbf{a}, \mathbf{b}\rangle = \mathbf{a}^\top\mathbf{b} = \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 1 \cdot 2 + 3 \cdot 4 + 5 \cdot 6 = 44$\\
+             $\mathbf{a} \otimes \mathbf{b} = \mathbf{a}\mathbf{b}^\top = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 1 \cdot 2 & 1 \cdot 4 & 1 \cdot 6 \\ 3 \cdot 2 & 3 \cdot 4 & 3 \cdot 6 \\ 5 \cdot 2 & 5 \cdot 4 & 5 \cdot 6 \end{bmatrix} = \begin{bmatrix} 2 & 4 & 6 \\ 6 & 12 & 18 \\ 10 & 20 & 30 \end{bmatrix}$\\
+             $\langle\mathbf{b}, \mathbf{a}\rangle = \mathbf{b}^\top\mathbf{a} = \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} = 2 \cdot 1 + 4 \cdot 3 + 6 \cdot 5 = 44$\\
+             $\mathbf{b} \otimes \mathbf{a} = \mathbf{b}\mathbf{a}^\top = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} = \begin{bmatrix} 2 \cdot 1 & 2 \cdot 3 & 2 \cdot 5 \\ 4 \cdot 1 & 4 \cdot 3 & 4 \cdot 5 \\ 6 \cdot 1 & 6 \cdot 3 & 6 \cdot 5 \end{bmatrix} = \begin{bmatrix} 2 & 6 & 10 \\ 4 & 12 & 20 \\ 6 & 18 & 30 \end{bmatrix}$\\
+             $\langle\mathbf{a}, \mathbf{a}\rangle = \mathbf{a}^\top\mathbf{a} = \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} = 1 \cdot 1 + 3 \cdot 3 + 5 \cdot 5 = 35$\\
+             $\mathbf{a} \otimes \mathbf{a} = \mathbf{a}\mathbf{a}^\top = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} = \begin{bmatrix} 1 \cdot 1 & 1 \cdot 3 & 1 \cdot 5 \\ 3 \cdot 1 & 3 \cdot 3 & 3 \cdot 5 \\ 5 \cdot 1 & 5 \cdot 3 & 5 \cdot 5 \end{bmatrix} = \begin{bmatrix} 1 & 3 & 5 \\ 3 & 9 & 15 \\ 5 & 15 & 25 \end{bmatrix}$\\
+             $\langle\mathbf{b}, \mathbf{b}\rangle = \mathbf{b}^\top\mathbf{b} = \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 2 \cdot 2 + 4 \cdot 4 + 6 \cdot 6 = 56$\\
+             $\mathbf{b} \otimes \mathbf{b} = \mathbf{b}\mathbf{b}^\top = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 2 \cdot 2 & 2 \cdot 4 & 2 \cdot 6 \\ 4 \cdot 2 & 4 \cdot 4 & 4 \cdot 6 \\ 6 \cdot 2 & 6 \cdot 4 & 6 \cdot 6 \end{bmatrix} = \begin{bmatrix} 4 & 8 & 12 \\ 8 & 16 & 24 \\ 12 & 24 & 36 \end{bmatrix}$\\
+             $\beta_1 \langle\mathbf{a}, \mathbf{b}\rangle = 4 \cdot 44 = 176$\\
+             $\beta_1 (\mathbf{a} \otimes \mathbf{b}) = 4 \begin{bmatrix} 2 & 4 & 6 \\ 6 & 12 & 18 \\ 10 & 20 & 30 \end{bmatrix} = \begin{bmatrix} 8 & 16 & 24 \\ 24 & 48 & 72 \\ 40 & 80 & 120 \end{bmatrix}$\\
+             $\langle \beta_1 \mathbf{a}, \mathbf{b} \rangle = (4\mathbf{a})^\top \mathbf{b} = \left(4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix}\right)^\top \begin{bmatrix} 4 & 12 & 20 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 4 \cdot 2 + 12 \cdot 4 + 20 \cdot 6 = 176$\\
+             $\beta_1 \mathbf{a} \otimes \mathbf{b} = (4\mathbf{a})\mathbf{b}^\top = \left(4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix}\right) \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 4 \\ 12 \\ 20 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 4 \cdot 2 & 4 \cdot 4 & 4 \cdot 6 \\ 12 \cdot 2 & 12 \cdot 4 & 12 \cdot 6 \\ 20 \cdot 2 & 20 \cdot 4 & 20 \cdot 6 \end{bmatrix} = \begin{bmatrix} 8 & 16 & 24 \\ 24 & 48 & 72 \\ 40 & 80 & 120 \end{bmatrix}$\\
+\end{enumerate}
+\item Code:
+\begin{lstlisting}[language=python]
+a = np.array([1, 3, 5])
+b = np.array([2, 4, 6])
+A = np.array([[1, 2, 3],
+              [2, 4, 6]])
+B = np.array([[7, 8],
+              [9, 10],
+              [11, 12]])
+C = np.array([[1, 0, 0],
+              [0, 0, 1]])
+beta_1 = 4
+beta_2 = 5
+\end{lstlisting}
+\begin{lstlisting}[language=python]
+a + b
+\end{lstlisting}
+\begin{verbatim}
+array([ 3,  7, 11])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+beta_1 * a
+\end{lstlisting}
+\begin{verbatim}
+array([ 4, 12, 20])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+a * b
+\end{lstlisting}
+\begin{verbatim}
+array([ 2, 12, 30])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+beta_1 * a + beta_2 * b
+\end{lstlisting}
+\begin{verbatim}
+array([14, 32, 50])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+beta_1 * A
+\end{lstlisting}
+\begin{verbatim}
+array([[ 4,  8, 12],
+       [ 8, 16, 24]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+A + B
+\end{lstlisting}
+Successful indication of DNE:
+\begin{verbatim}
+ValueError: operands could not be broadcast together with shapes (2,3) (3,2)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+A + C
+\end{lstlisting}
+\begin{verbatim}
+array([[2, 2, 3],
+       [2, 4, 7]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+(A @ B).T
+\end{lstlisting}
+\begin{verbatim}
+array([[ 58, 116],  
+       [ 64, 128]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+B.T @ A.T
+\end{lstlisting}
+\begin{verbatim}
+array([[ 58, 116],
+       [ 64, 128]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+(A.T).T
+\end{lstlisting}
+\begin{verbatim}
+array([[1, 2, 3],
+       [2, 4, 6]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+(A + C).T
+\end{lstlisting}
+\begin{verbatim}
+array([[2, 2],
+       [2, 4],
+       [3, 7]])
+\end{verbatim}
+\begin{lstlisting}[language=python]
+def inner_outer(a, b, mult=1):
+    print(mult * np.inner(a, b))
+    print(mult * np.outer(a, b))
+
+inner_outer(a, b)
+inner_outer(b, a)
+inner_outer(a, a)
+inner_outer(b, b)
+inner_outer(a, b, beta_1)
+inner_outer(beta_1 * a, b)
+\end{lstlisting}
+\begin{verbatim}
+44
+[[ 2  4  6]
+ [ 6 12 18]
+ [10 20 30]]
+44
+[[ 2  6 10]
+ [ 4 12 20]
+ [ 6 18 30]]
+35
+[[ 1  3  5]
+ [ 3  9 15]
+ [ 5 15 25]]
+56
+[[ 4  8 12]
+ [ 8 16 24]
+ [12 24 36]]
+176
+[[  8  16  24]
+ [ 24  48  72]
+ [ 40  80 120]]
+176
+[[  8  16  24]
+ [ 24  48  72]
+ [ 40  80 120]]
+\end{verbatim}
+\end{enumerate}
+\end{enumerate}
 \end{document}
 
