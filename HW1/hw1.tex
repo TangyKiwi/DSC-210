@@ -142,7 +142,7 @@ for all $i < j$, and A is a lower triangular matrix.\\
 
 We already know that $L_1L_2$ is a lower triangular matrix (base case, product 
 of 2 lower triangular matrices will result in a lower triangular matrix). $L_1L_2L_3 = (L_1L_2)L_3 = AL_3$,
-which reverts back to our base case of multiplying two lower triangular matrices.
+which circles back to our base case of multiplying two lower triangular matrices.
 Any further products will also result multiplying two lower triangular matrices, 
 thus, by induction, we can conclude that the product of $m$ lower triangular 
 matrices will ultimately result in a lower triangular matrix. 
@@ -432,7 +432,41 @@ Prove that if a matrix $\mathbf{A}$ is triangular (upper or lower) then $\mathbf
 
 \textbf{Solution:}
 
+Let $\mathbf{A}$ be $\begin{bmatrix} a & b \\ 0 & d \end{bmatrix}$, then $\mathbf{A}^{-1} = \frac{1}{ad} \begin{bmatrix} d & -b \\ 0 & a \end{bmatrix}$, which is also upper triangular. The case for lower triangular matrices is similar.\\
 
+Now, let $\mathbf{A}$ be an $(n + 1) \times (n + 1)$ upper triangular matrix:
+\begin{gather*}
+    \mathbf{A} = \begin{bmatrix} A_{1} & a_2 \\ \mathbf{0} & x \end{bmatrix}
+\end{gather*}
+Where $A_1$ is an $n \times n$ upper triangular matrix, $a_2$ is an $n \times 1$ 
+vector, $\mathbf{0}$ is a $1 \times n$ 0 vector, and $x$ is a scalar. Let 
+$\mathbf{A}^{-1}$ then be in a similar format: \\
+\begin{gather*}
+    \mathbf{A}^{-1} = \begin{bmatrix} B_{1} & b_2 \\ b_3 & y \end{bmatrix}
+\end{gather*}
+Where $B_1$ is an $n \times n$ matrix, $b_2$ is an $n \times 1$ vector, $b_3$ is 
+a $1 \times n$ vector, and $y$ is a scalar.\\
+
+We know that $\mathbf{A}\mathbf{A}^{-1} = \mathbf{I}_{n + 1}$:\\
+\begin{gather*}
+    \begin{bmatrix} A_{1} & a_2 \\ \mathbf{0} & x \end{bmatrix} \begin{bmatrix} B_{1} & b_2 \\ b_3 & y \end{bmatrix} = \begin{bmatrix} A_1B_1 + a_2b_3 & A_1b_2 + a_2y \\ xb_3 & xy \end{bmatrix} = \begin{bmatrix} I_n & \mathbf{0} \\ \mathbf{0} & 1 \end{bmatrix}
+\end{gather*}
+From the lower left multiplication, we can see that $b_3 = \mathbf{0}$ since $x$ 
+is non-zero (otherwise $\mathbf{A}$ would be singular and not invertible). Thus, 
+we can simplifty the top left multiplication to $A_1B_1 = I_n$. Therefore, 
+$B_1 = A_1^{-1}$, and by induction hypothesis, is also upper triangular. Thus: \\
+\begin{gather*}
+    \mathbf{A}^{-1} = \begin{bmatrix} A_1^{-1} & b_2 \\ \mathbf{0} & y \end{bmatrix}
+\end{gather*}
+which upper triangular. The case for lower triangular matrices is similar.\\
+
+Now, let $\mathbf{A}$ be both triangular and orthogonal, then $\mathbf{A}^\top\mathbf{A} = \mathbf{I}$, 
+so $\mathbf{A}^{-1} = \mathbf{A}^\top$. From our prior proof, if $\mathbf{A}$ is 
+upper triangular, then $\mathbf{A}^{-1}$ is also upper triangular. However, if 
+$\mathbf{A}$ is upper triangular, then $\mathbf{A}^\top$ is lower triangular. The 
+only possible way for $\mathbf{A}^{-1}$ to be both upper and lower triangular is 
+if it is diagonal, thus $\mathbf{A}$ is diagonal. The case for lower triangular
+matrices is similar.
 
 %%%%%%%%%%%%%%%%%%%%
 \clearpage
@@ -448,6 +482,66 @@ Let $\mathbf{x}$ be a real $m$-vector, the vector $p$-norms $\lVert \mathbf{x} \
 \end{enumerate}
 
 \textbf{Solution:}
+
+\begin{enumerate}
+    \item $\lVert \mathbf{x} \rVert_\infty \le \lVert \mathbf{x} \rVert_2$\\
+    By the definition of the $p$-norms, we have:
+    \begin{align*}
+        \lVert \mathbf{x} \rVert_\infty &= \max_i |x_i| \\
+        \lVert \mathbf{x} \rVert_2 &= \sqrt{\sum_i x_i^2}
+    \end{align*}
+    Since $\lVert \mathbf{x} \rVert_\infty = x_k$ for some $k$, we can see that:
+    \[
+        \lVert \mathbf{x} \rVert_2 = \sqrt{\sum_i x_i^2} \geq \sqrt{|x_k|^2} = |x_k| = \lVert \mathbf{x} \rVert_\infty
+    \]
+    Let $\mathbf{x} = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}$, where $x_1 = 1$ and all other $x_i \dots x_m = 0$, then $\lVert \mathbf{x} \rVert_\infty = 1$ and $\lVert \mathbf{x} \rVert_2 = 1$, satisfying equality.
+    \item Use the definitions again, but recognize that each $|x_i| \leq \lVert \mathbf{x} \rVert_\infty$. Then:
+    \begin{align*}
+        \sum_{i=1}^{m} x_i^2 \leq \sum_{i=1}^{m} \lVert \mathbf{x} \rVert_\infty^2 = m \cdot \lVert \mathbf{x} \rVert_\infty^2 \\
+        \sqrt{\sum_{i=1}^{m} x_i^2} \leq \sqrt{m \cdot \lVert \mathbf{x} \rVert_\infty^2}\\
+        \lVert \mathbf{x} \rVert_2 \leq \sqrt{m} \cdot \lVert \mathbf{x} \rVert_\infty
+    \end{align*}
+    Let $\mathbf{x} = \mathbf{1}$, a vector of all ones, then $\lVert \mathbf{x} \rVert_\infty = 1$ and $\lVert \mathbf{x} \rVert_2 = \sqrt{m}$, satisfying equality.
+    \item Code + figure below:
+\begin{lstlisting}[language=python]
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+
+x = np.linspace(-1.5, 1.5, 500)
+y = np.linspace(-1.5, 1.5, 500)
+X, Y = np.meshgrid(x, y)
+
+plt.figure(figsize=(8, 8))
+
+norm_inf = np.maximum(np.abs(X), np.abs(Y))
+norm_2 = np.sqrt(X**2 + Y**2)
+
+plt.contour(X, Y, norm_inf, levels=[1], colors="red", linewidths=2)
+
+plt.contourf(X, Y, norm_2, levels=[0, 1, 3], colors=["lightblue", "lightgreen"], alpha=0.6)
+plt.contour(X, Y, norm_2, levels=[1], colors="blue", linewidths=2, linestyles="--")
+
+plt.xlim(-1.5, 1.5)
+plt.ylim(-1.5, 1.5)
+plt.gca().set_aspect("equal")
+plt.xlabel(r"$x_1$")
+plt.ylabel(r"$x_2$")
+plt.legend(handles=[
+    plt.Line2D([0], [0], color="red", lw=2, label=r"$||\mathbf{x}||_\infty = 1$"),
+    plt.Line2D([0], [0], color="blue", lw=2, linestyle="--", label=r"$||\mathbf{x}||_2 < 1$"),
+    Patch(color="lightblue", label=r"$||\mathbf{x}||_2 < 1$"),
+    Patch(color="lightgreen", label=r"$||\mathbf{x}||_2 > 1$")
+], loc="upper right")
+plt.tight_layout()
+plt.grid(True, alpha=0.3)
+plt.show()
+\end{lstlisting}
+\end{enumerate}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{4c.png}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%
 \clearpage
