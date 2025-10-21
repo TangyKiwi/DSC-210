@@ -520,7 +520,7 @@ norm_2 = np.sqrt(X**2 + Y**2)
 plt.contour(X, Y, norm_inf, levels=[1], colors="red", linewidths=2)
 
 plt.contourf(X, Y, norm_2, levels=[0, 1, 3], colors=["lightblue", "lightgreen"], alpha=0.6)
-plt.contour(X, Y, norm_2, levels=[1], colors="blue", linewidths=2, linestyles="--")
+plt.contour(X, Y, norm_2, levels=[1], colors="blue", linewidths=2)
 
 plt.xlim(-1.5, 1.5)
 plt.ylim(-1.5, 1.5)
@@ -529,7 +529,7 @@ plt.xlabel(r"$x_1$")
 plt.ylabel(r"$x_2$")
 plt.legend(handles=[
     plt.Line2D([0], [0], color="red", lw=2, label=r"$||\mathbf{x}||_\infty = 1$"),
-    plt.Line2D([0], [0], color="blue", lw=2, linestyle="--", label=r"$||\mathbf{x}||_2 < 1$"),
+    plt.Line2D([0], [0], color="blue", lw=2, label=r"$||\mathbf{x}||_2 = 1$"),
     Patch(color="lightblue", label=r"$||\mathbf{x}||_2 < 1$"),
     Patch(color="lightgreen", label=r"$||\mathbf{x}||_2 > 1$")
 ], loc="upper right")
@@ -596,19 +596,12 @@ Given two 3-dimensional vectors $\mathbf{a}, \mathbf{b}$, and three matrices $A 
               $(\mathbf{A}^{\top})^{\top} = \left(\begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix}^\top\right)^{\top} = \begin{bmatrix} 1 & 2 \\ 2 & 4 \\ 3 & 6 \end{bmatrix}^\top = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix}$\\
               $(\mathbf{A} + \mathbf{C})^\top = \left(\text{part (ii)}\right)^\top = \begin{bmatrix} 2 & 2 & 3 \\ 2 & 4 & 7 \end{bmatrix}^\top = \begin{bmatrix} 2 & 2 \\ 2 & 4 \\ 3 & 7 \end{bmatrix}$
 \item [(iv)] $\langle\mathbf{a}, \mathbf{b}\rangle = \mathbf{a}^\top\mathbf{b} = \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 1 \cdot 2 + 3 \cdot 4 + 5 \cdot 6 = 44$\\
-             $\mathbf{a} \otimes \mathbf{b} = \mathbf{a}\mathbf{b}^\top = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 1 \cdot 2 & 1 \cdot 4 & 1 \cdot 6 \\ 3 \cdot 2 & 3 \cdot 4 & 3 \cdot 6 \\ 5 \cdot 2 & 5 \cdot 4 & 5 \cdot 6 \end{bmatrix} = \begin{bmatrix} 2 & 4 & 6 \\ 6 & 12 & 18 \\ 10 & 20 & 30 \end{bmatrix}$\\
              $\langle\mathbf{b}, \mathbf{a}\rangle = \mathbf{b}^\top\mathbf{a} = \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} = 2 \cdot 1 + 4 \cdot 3 + 6 \cdot 5 = 44$\\
-             $\mathbf{b} \otimes \mathbf{a} = \mathbf{b}\mathbf{a}^\top = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} = \begin{bmatrix} 2 \cdot 1 & 2 \cdot 3 & 2 \cdot 5 \\ 4 \cdot 1 & 4 \cdot 3 & 4 \cdot 5 \\ 6 \cdot 1 & 6 \cdot 3 & 6 \cdot 5 \end{bmatrix} = \begin{bmatrix} 2 & 6 & 10 \\ 4 & 12 & 20 \\ 6 & 18 & 30 \end{bmatrix}$\\
              $\langle\mathbf{a}, \mathbf{a}\rangle = \mathbf{a}^\top\mathbf{a} = \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} = 1 \cdot 1 + 3 \cdot 3 + 5 \cdot 5 = 35$\\
-             $\mathbf{a} \otimes \mathbf{a} = \mathbf{a}\mathbf{a}^\top = \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix} \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} = \begin{bmatrix} 1 \cdot 1 & 1 \cdot 3 & 1 \cdot 5 \\ 3 \cdot 1 & 3 \cdot 3 & 3 \cdot 5 \\ 5 \cdot 1 & 5 \cdot 3 & 5 \cdot 5 \end{bmatrix} = \begin{bmatrix} 1 & 3 & 5 \\ 3 & 9 & 15 \\ 5 & 15 & 25 \end{bmatrix}$\\
              $\langle\mathbf{b}, \mathbf{b}\rangle = \mathbf{b}^\top\mathbf{b} = \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 2 \cdot 2 + 4 \cdot 4 + 6 \cdot 6 = 56$\\
-             $\mathbf{b} \otimes \mathbf{b} = \mathbf{b}\mathbf{b}^\top = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 2 \cdot 2 & 2 \cdot 4 & 2 \cdot 6 \\ 4 \cdot 2 & 4 \cdot 4 & 4 \cdot 6 \\ 6 \cdot 2 & 6 \cdot 4 & 6 \cdot 6 \end{bmatrix} = \begin{bmatrix} 4 & 8 & 12 \\ 8 & 16 & 24 \\ 12 & 24 & 36 \end{bmatrix}$\\
              $\beta_1 \langle\mathbf{a}, \mathbf{b}\rangle = 4 \cdot 44 = 176$\\
-             $\beta_1 (\mathbf{a} \otimes \mathbf{b}) = 4 \begin{bmatrix} 2 & 4 & 6 \\ 6 & 12 & 18 \\ 10 & 20 & 30 \end{bmatrix} = \begin{bmatrix} 8 & 16 & 24 \\ 24 & 48 & 72 \\ 40 & 80 & 120 \end{bmatrix}$\\
              $\langle \beta_1 \mathbf{a}, \mathbf{b} \rangle = (4\mathbf{a})^\top \mathbf{b} = \left(4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix}\right)^\top \begin{bmatrix} 4 & 12 & 20 \end{bmatrix} \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} = 4 \cdot 2 + 12 \cdot 4 + 20 \cdot 6 = 176$\\
-             $\beta_1 \mathbf{a} \otimes \mathbf{b} = (4\mathbf{a})\mathbf{b}^\top = \left(4 \begin{bmatrix} 1 \\ 3 \\ 5 \end{bmatrix}\right) \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 4 \\ 12 \\ 20 \end{bmatrix} \begin{bmatrix} 2 & 4 & 6 \end{bmatrix} = \begin{bmatrix} 4 \cdot 2 & 4 \cdot 4 & 4 \cdot 6 \\ 12 \cdot 2 & 12 \cdot 4 & 12 \cdot 6 \\ 20 \cdot 2 & 20 \cdot 4 & 20 \cdot 6 \end{bmatrix} = \begin{bmatrix} 8 & 16 & 24 \\ 24 & 48 & 72 \\ 40 & 80 & 120 \end{bmatrix}$\\
-             $\langle\mathbf{b}, \mathbf{a}^\top\rangle = \mathbf{b}^\top\mathbf{a}^\top = \text{DNE bc dimensions are incompatible}$\\
-             $\mathbf{b} \otimes \mathbf{a}^\top = \mathbf{b}(\mathbf{a}^\top)^\top = \mathbf{b}\mathbf{a} = \text{DNE bc dimensions are incompatible}$
+             $\mathbf{b} \mathbf{a}^\top = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix} \begin{bmatrix} 1 & 3 & 5 \end{bmatrix} = \begin{bmatrix} 2 \cdot 1 & 2 \cdot 3 & 2 \cdot 5 \\ 4 \cdot 1 & 4 \cdot 3 & 4 \cdot 5 \\ 6 \cdot 1 & 6 \cdot 3 & 6 \cdot 5 \end{bmatrix} = \begin{bmatrix} 2 & 6 & 10 \\ 4 & 12 & 20 \\ 6 & 18 & 30 \end{bmatrix}$
 \item [(v)] $\det(\mathbf{AB}) = \det\left(\begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \end{bmatrix} \begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix}\right) = \det\left(\begin{bmatrix} 58 & 64 \\ 116 & 128 \end{bmatrix}\right) = 58 \cdot 128 - 64 \cdot 116 = 7424 - 7424 = 0$\\
              $\det(\mathbf{BC}) = \det\left(\begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}\right) = \det\left(\begin{bmatrix} 7 & 8 & 0 \\ 9 & 10 & 0 \\ 11 & 12 & 0 \end{bmatrix}\right) = 7 \det\left(\begin{bmatrix} 10 & 0 \\ 12 & 0 \end{bmatrix}\right) - 8 \det\left(\begin{bmatrix} 9 & 0 \\ 11 & 0 \end{bmatrix}\right) + 0 = 7(10 \cdot 0 - 0 \cdot 12) - 8(9 \cdot 0 - 0 \cdot 11) + 0 = 0 - 0 + 0 = 0$
 \end{enumerate}
@@ -701,59 +694,48 @@ array([[2, 2],
        [3, 7]])
 \end{verbatim}
 \begin{lstlisting}[language=python]
-def inner_outer(a, b, mult=1):
-    print(mult * np.inner(a, b))
-    print(mult * np.outer(a, b))
-
-inner_outer(a, b)
-inner_outer(b, a)
-inner_outer(a, a)
-inner_outer(b, b)
-inner_outer(a, b, beta_1)
-inner_outer(beta_1 * a, b)
+    np.inner(a, b)
 \end{lstlisting}
 \begin{verbatim}
-44
-[[ 2  4  6]
- [ 6 12 18]
- [10 20 30]]
-44
-[[ 2  6 10]
- [ 4 12 20]
- [ 6 18 30]]
-35
-[[ 1  3  5]
- [ 3  9 15]
- [ 5 15 25]]
-56
-[[ 4  8 12]
- [ 8 16 24]
- [12 24 36]]
-176
-[[  8  16  24]
- [ 24  48  72]
- [ 40  80 120]]
-176
-[[  8  16  24]
- [ 24  48  72]
- [ 40  80 120]]
-\end{verbatim}
-We need to hard reshape the vectors for numpy to not throw an error as the internal
-implementation of inner and outer products expect 1D arrays for vectors. 
-\textit{np.outer} will always return a matrix, so we use \textit{@} (matmul) operator
-to replicate the true intended outer product calculation and get the expected error.
-\begin{lstlisting}[language=python]
-np.inner(b.reshape(3, 1), a.reshape(3, 1).T)
-\end{lstlisting}
-\begin{verbatim}
-ValueError: shapes (3,1) and (3,1) not aligned: 1 (dim 1) != 3 (dim 0)
+np.int64(44)
 \end{verbatim}
 \begin{lstlisting}[language=python]
-b.reshape(3, 1).T @ a.reshape(3, 1).T
+    np.inner(b, a)
 \end{lstlisting}
 \begin{verbatim}
-ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, 
-with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 3)
+np.int64(44)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+    np.inner(a, a)
+\end{lstlisting}
+\begin{verbatim}
+np.int64(35)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+    np.inner(5, 6)
+\end{lstlisting}
+\begin{verbatim}
+np.int64(176)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+    beta_1 * np.inner(a, b)
+\end{lstlisting}
+\begin{verbatim}
+np.int64(176)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+    np.inner(beta_1 * a, b)
+\end{lstlisting}
+\begin{verbatim}
+np.int64(176)
+\end{verbatim}
+\begin{lstlisting}[language=python]
+    np.outer(b, a)
+\end{lstlisting}
+\begin{verbatim}
+array([[ 2,  6, 10],
+       [ 4, 12, 20],
+       [ 6, 18, 30]])
 \end{verbatim}
 \begin{lstlisting}[language=python]
 np.linalg.det(A @ B)
