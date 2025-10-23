@@ -292,8 +292,23 @@ matches the solution from \textbf{Question 1}.
 
 Perform QR decomposition for the matrix corresponding to the equations in \textbf{Question 1} using the Gram-Schmidt algorithm. Using the decomposition, solve for $\mathbf{x}$. Match your solution with that of \textbf{Question 1} and \textbf{Question 2}.
 
-\textbf{Solution:}
-
+\textbf{Solution:} \\
+We start with our matrix:
+\[\begin{bmatrix}
+2 & 6 & 7 \\
+-8 & 10 & 3 \\
+9 & 10 & 1
+\end{bmatrix}
+\]
+Thus:
+\begin{flalign*}
+\mathbf{u}_1 &= (2, -8, 9) & \\
+\mathbf{e}_1 &= \frac{\mathbf{u}_1}{\|\mathbf{u}_1\|} = \frac{(2, -8, 9)}{\sqrt{2^2 + (-8)^2 + 9^2}} = \frac{(2, -8, 9)}{\sqrt{149}} & \\
+\mathbf{u}_2 &= (6, 10, 10) - \text{proj}_{\mathbf{e}_1} (6, 10, 10) = (6, 10, 10) - \left( (6, 10, 10) \cdot \mathbf{e}_1 \right) \mathbf{e}_1 & \\
+&= (6, 10, 10) - \left( \frac{6 \cdot 2}{\sqrt{149}} + \frac{10 \cdot (-8)}{\sqrt{149}} + \frac{10 \cdot 9}{\sqrt{149}} \right) \frac{(2, -8, 9)}{\sqrt{149}} = (6, 10, 10) - \frac{22}{149} (2, -8, 9) & \\
+&= \left( 6 - \frac{44}{149}, 10 + \frac{176}{149}, 10 - \frac{198}{149} \right) = \left( \frac{850}{149}, \frac{1666}{149}, \frac{1292}{149} \right) & \\
+\mathbf{e}_2 &= \frac{\mathbf{u}_2}{\|\mathbf{u}_2\|} = \frac{\left( \frac{850}{149}, \frac{1666}{149}, \frac{1292}{149} \right)}{\sqrt{\left( \frac{850}{149} \right)^2 + \left( \frac{1666}{149} \right)^2 + \left( \frac{1292}{149} \right)^2}} = \frac{(850, 1666, 1292)}{\sqrt{850^2 + 1666^2 + 1292^2}} & \\
+\end{flalign*}
 
 \newpage
 
