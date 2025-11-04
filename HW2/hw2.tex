@@ -380,7 +380,26 @@ matches the solution from \textbf{Question 1} and \textbf{Question 2}.
 
 Show that the residual vector $\mathbf{a}_i^{\perp}$ is orthogonal to $\mathbf{q}_1, \mathbf{q}_2,\dots, \mathbf{q}_{i-1}$ in the Gram-Schmidt process.
 
-\textbf{Solution:}
+\textbf{Solution:}\\
+The residual vector $\mathbf{a}_i^{\perp}$ is given by:
+\[\mathbf{a}_i^{\perp} = \mathbf{a}_i - \sum_{j=1}^{i-1} \text{proj}_{\mathbf{q}_j}(\mathbf{a}_i)\]
+The projection can be expressed as:
+\[\text{proj}_{\mathbf{q}_j}(\mathbf{a}_i) = \left( \frac{\mathbf{a}_i \cdot \mathbf{q}_j}{\mathbf{q}_j \cdot \mathbf{q}_j} \right) \mathbf{q}_j\]
+To prove orthogonality, we need to show that the dot product of $\mathbf{a}_i^{\perp}$ with each $\mathbf{q}_k$ (for $k = 1, 2, \dots, i-1$) is zero:
+\[\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k = \left( \mathbf{a}_i - \sum_{j=1}^{i-1} \text{proj}_{\mathbf{q}_j}(\mathbf{a}_i) \right) \cdot \mathbf{q}_k\]
+Expanding this, we have:
+\[\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k = \mathbf{a}_i \cdot \mathbf{q}_k - \sum_{j=1}^{i-1} \left( \text{proj}_{\mathbf{q}_j}(\mathbf{a}_i) \cdot \mathbf{q}_k \right)\]
+Now, we know that the projection $\text{proj}_{\mathbf{q}_j}(\mathbf{a}_i)$ is a scalar multiple of $\mathbf{q}_j$. Therefore, when we take the dot product with $\mathbf{q}_k$, we get:
+\[\text{proj}_{\mathbf{q}_j}(\mathbf{a}_i) \cdot \mathbf{q}_k = \left( \frac{\mathbf{a}_i \cdot \mathbf{q}_j}{\mathbf{q}_j \cdot \mathbf{q}_j} \right) (\mathbf{q}_j \cdot \mathbf{q}_k)\]
+Since $\mathbf{q}_j$ and $\mathbf{q}_k$ are orthogonal for $j \neq k$, we have:
+\[\mathbf{q}_j \cdot \mathbf{q}_k = 0 \quad \text{for } j \neq k\]
+Thus, the sum reduces to:
+\[\sum_{j=1}^{i-1} \left( \text{proj}_{\mathbf{q}_j}(\mathbf{a}_i) \cdot \mathbf{q}_k \right) = \text{proj}_{\mathbf{q}_k}(\mathbf{a}_i) \cdot \mathbf{q}_k\]
+Substituting this back into our expression for $\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k$, we get:
+\[\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k = \mathbf{a}_i \cdot \mathbf{q}_k - \text{proj}_{\mathbf{q}_k}(\mathbf{a}_i) \cdot \mathbf{q}_k\]
+\[\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k = \mathbf{a}_i \cdot \mathbf{q}_k - \left(\frac{\mathbf{a}_i \cdot \mathbf{q}_k}{\mathbf{q}_k \cdot \mathbf{q}_k}\right)(\mathbf{q}_k \cdot \mathbf{q}_k)\]
+\[\mathbf{a}_i^{\perp} \cdot \mathbf{q}_k = \mathbf{a}_i \cdot \mathbf{q}_k - \mathbf{a}_i \cdot \mathbf{q}_k = 0\]
+Since this holds for all $k = 1, 2, \dots, i-1$, the residual vector $\mathbf{a}_i^{\perp}$ is orthogonal to $\mathbf{q}_1, \mathbf{q}_2,\dots, \mathbf{q}_{i-1}$.
 
 \newpage
 
@@ -401,10 +420,19 @@ Compute the QR decomposition of following two matrices using Gram-Schmidt proces
 \end{enumerate}
 Note: matrices $\mathbf{Q}$ and $\mathbf{R}$ must be square matrices.
 
-\textbf{Solution:}
-
-
-
+\textbf{Solution:} \\
+\begin{enumerate}
+	\item $\mathbf{A} = \begin{bmatrix}
+-1 & 1 & 1\\
+-1 & -1 & 1\\	
+1 & 1 & -1
+\end{bmatrix}$
+	\item $\mathbf{B} = \begin{bmatrix}
+-1 & -1 & -1\\
+1 & 1 & 1\\
+-1 & -1 & -1
+\end{bmatrix}$
+\end{enumerate}
 \end{enumerate}
 \end{enumerate}
 \end{document}
