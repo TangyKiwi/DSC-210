@@ -19,6 +19,7 @@
 \usepackage{eucal}
 \usepackage{hyperref}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{pdfpages}
 \pagestyle{empty}
 \DeclareMathOperator{\tr}{Tr}
 \newcommand*{\op}[1]{\check{\mathbf#1}}
@@ -200,8 +201,21 @@ Determine the SVD of the following matrices by hand calculation. Make sure to ex
     \end{bmatrix}$: \\
     $\begin{bmatrix} 2 & 2 \\ 3 & 2 \end{bmatrix} \begin{bmatrix} 2 & 2 \\ 3 & 2 \end{bmatrix}^T = \begin{bmatrix} 8 & 10 \\ 10 & 13 \end{bmatrix}$ \\
     $\det\left(\begin{bmatrix} 8 - \lambda & 10 \\ 10 & 13 - \lambda \end{bmatrix}\right) = 0$ \\
-    $(8 - \lambda)(13 - \lambda) - 100 = 0 \implies \lambda^2 - 21\lambda + 4 = 0$
-    \item 
+    $(8 - \lambda)(13 - \lambda) - 100 = 0 \implies \lambda^2 - 21\lambda + 4 = 0$ \\
+    $\lambda = \frac{21 \pm \sqrt{441 - 16}}{2} = \frac{21 \pm \sqrt{425}}{2} \therefore \sigma_1 = \sqrt{\frac{21 + \sqrt{425}}{2}}, \sigma_2 = \sqrt{\frac{21 - \sqrt{425}}{2}}$ \\
+    For $\lambda = \frac{21 + \sqrt{425}}{2}$: \\
+    $\begin{bmatrix} 8 - \frac{21 + \sqrt{425}}{2} & 10 \\ 10 & 13 - \frac{21 + \sqrt{425}}{2} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0$ \\
+    $\begin{bmatrix} \frac{-5 - \sqrt{425}}{2} & 10 \\ 10 & \frac{5 - \sqrt{425}}{2} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0$ \\
+    $\begin{bmatrix} 1 & \frac{20}{-5 - \sqrt{425}} \\ 10 & \frac{5 - \sqrt{425}}{2} \end{bmatrix}$ \\
+    Note that $\frac{20}{-5 - \sqrt{425}} = \frac{20}{-5 - \sqrt{425}} \cdot \frac{-5 + \sqrt{425}}{-5 + \sqrt{425}} = \frac{20(-5(1 - \sqrt{17}))}{25 - 425} = \frac{-100(1 - \sqrt{17})}{-400} = \frac{1 - \sqrt{17}}{4}$, so we can simplify to: \\
+    $\begin{bmatrix} 1 & \frac{1 - \sqrt{17}}{4} \\ 10 & \frac{5(1 - \sqrt{17})}{2} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0, \therefore x_1 = -\frac{1 - \sqrt{17}}{4} x_2, u_1 = \begin{bmatrix} -\frac{1 - \sqrt{17}}{4} \\ 1 \end{bmatrix}$ \\
+    We normalize $u_1$ to get: \\
+    $u_1 = \frac{1}{\sqrt{\left(-\frac{1 - \sqrt{17}}{4}\right)^2 + 1}} \begin{bmatrix} -\frac{1 - \sqrt{17}}{4} \\ 1 \end{bmatrix} = \frac{1}{\sqrt{\frac{17 - \sqrt{17}}{8}}} \begin{bmatrix} -\frac{1 - \sqrt{17}}{4} \\ 1 \end{bmatrix} = \begin{bmatrix} -\frac{\sqrt{8}(1 - \sqrt{17})}{4\sqrt{17 - \sqrt{17}}} \\ \frac{1}{\sqrt{\frac{17 - \sqrt{17}}{8}}} \end{bmatrix} = \begin{bmatrix} -\frac{\sqrt{2} - \sqrt{34}}{2\sqrt{17 - \sqrt{17}}} \\ \sqrt{\frac{8}{17 - \sqrt{17}}} \end{bmatrix}$ \\
+    By same convention for $\lambda = \frac{21 - \sqrt{425}}{2}$, we get $u_2 = \begin{bmatrix} -\frac{\sqrt{2} + \sqrt{34}}{2\sqrt{17 + \sqrt{17}}} \\ \sqrt{\frac{8}{17 + \sqrt{17}}} \end{bmatrix}$ \\
+    $\therefore U = \begin{bmatrix} -\frac{\sqrt{2} - \sqrt{34}}{2\sqrt{17 - \sqrt{17}}} & -\frac{\sqrt{2} + \sqrt{34}}{2\sqrt{17 + \sqrt{17}}} \\ \sqrt{\frac{8}{17 - \sqrt{17}}} & \sqrt{\frac{8}{17 + \sqrt{17}}} \end{bmatrix}, \Sigma = \begin{bmatrix} \sqrt{\frac{21 + \sqrt{425}}{2}} & 0 \\ 0 & \sqrt{\frac{21 - \sqrt{425}}{2}} \end{bmatrix}$ \\ 
+    We use $v_i = \frac{1}{\sigma_i} A^T u_i$ to compute $V$: \\
+    $V = \begin{bmatrix} \frac{\sqrt{17} + 5}{2\sqrt{4\sqrt{17} + 17}} & \frac{-\sqrt{17} + 5}{2\sqrt{-4\sqrt{17} + 17}} \\ \frac{\sqrt{17} + 3}{2\sqrt{4\sqrt{17} + 17}} & \frac{-\sqrt{17} + 3}{2\sqrt{-4\sqrt{17} + 17}} \end{bmatrix}$
+    \item Python code:
 \begin{lstlisting}[language=python]
 import numpy as np
 
@@ -314,7 +328,7 @@ V^T matrix:
     For $\lambda_1 = 4$: \\
     $\begin{bmatrix} -9 & 3 \\ -6 & 2 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0 \therefore x_2 = 3x_1, u_1 = \frac{1}{\sqrt{10}} \begin{bmatrix} 1 \\ 3 \end{bmatrix}$ \\
     For $\lambda_2 = -3$: \\
-    $\begin{bmatrix} -2 & 3 \\ -6 & 9 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0 \therefore x_2 = 3x_1/2, u_2 = \frac{1}{\sqrt{13}} \begin{bmatrix} 2 \\ 3 \end{bmatrix}$ \\
+    $\begin{bmatrix} -2 & 3 \\ -6 & 9 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0 \therefore x_2 = 3x_1/2, u_2 = \frac{1}{\sqrt{13}} \begin{bmatrix} 2 \\ 3 \end{bmatrix}$s
     \item 
 \begin{lstlisting}[language=python]
 A = np.array([[-5, 3], [-6, 6]])
@@ -333,6 +347,25 @@ Eigenvectors:
 0.31622776601683794 0.9486832980505138
 0.5547001962252291 0.8320502943378437
 \end{verbatim}
+    \item Start with the $n = 2$ case. Assume that the eigenvectors $\mathbf{x}_1$ and $\mathbf{x}_2$ are linearly dependent. Then, there exists a scalar $c$ such that $\mathbf{x}_2 = c \mathbf{x}_1$. \\
+    From the definition of eigenvectors, we have: \\
+    $\mathbf{A} \mathbf{x}_1 = \lambda_1 \mathbf{x}_1$ \\
+    $\mathbf{A} \mathbf{x}_2 = \lambda_2 \mathbf{x}_2$ \\
+    Substituting $\mathbf{x}_2 = c \mathbf{x}_1$ into the second equation: \\
+    $\mathbf{A} (c \mathbf{x}_1) = \lambda_2 (c \mathbf{x}_1)$ \\
+    $c \mathbf{A} \mathbf{x}_1 = c \lambda_2 \mathbf{x}_1$ \\
+    Dividing both sides by $c$ (assuming $c \neq 0$): \\
+    $\mathbf{A} \mathbf{x}_1 = \lambda_2 \mathbf{x}_1$ \\
+    But from the first equation, we have $\mathbf{A} \mathbf{x}_1 = \lambda_1 \mathbf{x}_1$. \\
+    Therefore, $\lambda_1 \mathbf{x}_1 = \lambda_2 \mathbf{x}_1$. \\
+    Since $\mathbf{x}_1$ is non-zero, we can divide both sides by $\mathbf{x}_1$: \\
+    $\lambda_1 = \lambda_2$ \\
+    This contradicts our assumption that $\lambda_1$ and $\lambda_2$ are unique 
+    eigenvalues. Therefore, our initial assumption that $\mathbf{x}_1$ and 
+    $\mathbf{x}_2$ are linearly dependent must be false. Hence, for $n = 2$, the 
+    eigenvectors corresponding to unique eigenvalues are linearly independent. 
+    The proof can be extended to $n > 2$ using induction, following a similar 
+    argument.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -423,5 +456,7 @@ See attached notebook.
 \end{enumerate}
 
 % \end{enumerate}
+
+\includepdf[pages=-]{HW3_collab.pdf}
 
 \end{document}
