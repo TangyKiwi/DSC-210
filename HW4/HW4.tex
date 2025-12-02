@@ -73,7 +73,7 @@
 \textbf{\Large DSC 210 Numerical Linear Algebra, Fall 2025} \\ \bigskip
 \large{Homework Problems for Topic 4: \textit{ML and Least Squares Problems}} \\  \bigskip
 \begin{flushleft}
-    \large{Student Name (PID):}
+    \large{Student Name (PID): Kevin Lin (A69043483)}
 \end{flushleft}
 \end{center}
 \vspace{-4mm}
@@ -131,7 +131,27 @@ Consider a dataset with $m$ datapoints: $(t_i, y_i), i=1,...,m$. We want to mini
 
 What are $\mathbf{A}$, $\mathbf{x}$ and $\mathbf{y}$ in terms of the variables above?
 
-\textbf{Solution:}
+\textbf{Solution:} \\
+We can express the least squares problem in matrix form as follows:
+\[
+  \mathbf{A} = \begin{bmatrix}
+  t_1^2 & t_1 & 1 \\
+  t_2^2 & t_2 & 1 \\
+  \vdots & \vdots & \vdots \\
+  t_m^2 & t_m & 1
+  \end{bmatrix}, \quad
+  \mathbf{x} = \begin{bmatrix}
+  a \\
+  b \\
+  c
+  \end{bmatrix}, \quad
+  \mathbf{y} = \begin{bmatrix}
+  y_1 \\
+  y_2 \\
+  \vdots \\
+  y_m
+  \end{bmatrix}
+\]
 
 %%%%%%%%%%%%%%%
 \clearpage
@@ -266,8 +286,84 @@ L_\lambda(w) = \|Aw - y\|_2^2 + \lambda \|w\|_2^2,
 \textbf{Solution:}
 Typewrite the solution for parts (a) to (d) in latex and code the solution to (e) in the notebook \href{https://colab.research.google.com/drive/1lAyQW20omCqQD04MxgjxkkFCrvm4s_bF?usp=sharing}{google colab}.
 
-
-
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Gradient and Hessian.} 
+  \begin{enumerate}[]
+    \item
+      We compute the gradient $\nabla L_\lambda(w)$ by taking the derivative of $L_\lambda(w)$ with respect to $w$:
+      \[
+        \nabla L_\lambda(w) = 2A^\top(Aw - y) + 2\lambda w.
+      \]
+    \item
+      We compute the hessian $\nabla^2 L_\lambda(w)$ by taking the derivative of the gradient with respect to $w$:
+      \[
+        H_\lambda = 2A^\top A + 2\lambda I_d.
+      \]
+  \end{enumerate}
+  \item \textbf{Closed-form ridge solution via normal equations.}
+    To find the minimizer $w_\lambda^\star$ of $L_\lambda(w)$, we set the gradient to zero:
+    \[
+      \nabla L_\lambda(w_\lambda^\star) = 0 \implies 2A^\top(Aw_\lambda^\star - y) + 2\lambda w_\lambda^\star = 0.
+    \]
+    Rearranging gives:
+    \[
+      (A^\top A + \lambda I_d) w_\lambda^\star = A^\top y.
+    \]
+    Since $A^\top A + \lambda I_d$ is invertible for $\lambda > 0$, we can solve for $w_\lambda^\star$:
+    \[
+      w_\lambda^\star = (A^\top A + \lambda I_d)^{-1} A^\top y.
+    \]
+  \item \textbf{SVD and spectrum of the Hessian.}
+  \begin{enumerate}
+    \item
+      Using the SVD of $A$, we have:
+      \[
+        A^\top A = V \Sigma^\top U^\top U \Sigma V^\top = V \Sigma^2 V^\top,
+      \]
+      since $U^\top U = I_r$. Therefore, the Hessian can be expressed as:
+      \[
+        H_\lambda = 2V \Sigma^2 V^\top + 2\lambda I_d.
+      \]
+    \item
+      The eigenvalues of $H_\lambda$ can be found by considering the action of $H_\lambda$ on the basis vectors $v_i$:
+      \[
+        H_\lambda v_i = 2(\sigma_i^2 + \lambda)v_i \quad \text{for } i = 1, \dots, r,
+      \]
+      and for the remaining $d-r$ dimensions, we have:
+      \[
+        H_\lambda v_i = 2\lambda v_i \quad \text{for } i = r+1, \dots, d.
+      \]
+      Thus, the eigenvalues of $H_\lambda$ are:
+      \[
+        2(\sigma_1^2 + \lambda),\dots,2(\sigma_r^2 + \lambda),
+        \underbrace{2\lambda,\dots,2\lambda}_{d-r\ \text{times}}.
+      \]
+  \end{enumerate}
+  \item \textbf{Ridge solution in the SVD basis and relation to the pseudo-inverse.}
+  \begin{enumerate}
+    \item
+      Using the SVD of $A$, we can express $w_\lambda^\star$ as:
+      \[
+        w_\lambda^\star = V(\Sigma^2 + \lambda I_r)^{-1} \Sigma U^\top y.
+      \]
+      Expanding this, we get:
+      \[
+        w_\lambda^\star = \sum_{i=1}^r \frac{\sigma_i}{\sigma_i^2 + \lambda} (u_i^\top y) v_i,
+      \]
+      where $u_i$ are the columns of $U$. Thus, the coefficients $\alpha_i(\lambda)$ are given by:
+      \[
+        \alpha_i(\lambda) = \frac{\sigma_i}{\sigma_i^2 + \lambda} (u_i^\top y).
+      \]
+    \item
+      As $\lambda \to 0^+$, we have:
+      \[
+        \alpha_i(\lambda) \to \frac{1}{\sigma_i} (u_i^\top y),
+      \]
+      which corresponds to the coefficients of the minimum-norm least squares solution:
+      \[
+        w_0^\star = A^+ y = \sum_{i=1}^r \frac{1}{\sigma_i} (u_i^\top y) v_i.
+      \]
+  \end{enumerate}
 \end{enumerate}
-
+\end{enumerate}
 \end{document}
